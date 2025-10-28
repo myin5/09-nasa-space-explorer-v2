@@ -187,3 +187,120 @@ button:hover {
   outline-offset: 3px;
   border-radius: 8px;
 }
+/* ========= Layout Upgrade to match target screenshot ========= */
+
+/* Page + header spacing */
+body { background-color: #f5f5f5; }
+.site-header { margin-top: 24px; margin-bottom: 8px; }
+
+/* Controls row: centered like the screenshot */
+.filters {
+  flex-direction: row;          /* inline on all screens */
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 10px auto 24px auto;
+  padding: 0;
+}
+
+/* Inputs look like the sample (white, subtle border/shadow) */
+input[type="date"] {
+  background: #fff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 10px 12px;
+  min-width: 170px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.03);
+}
+
+/* Primary NASA-blue button */
+button {
+  background-color: #0b3d91;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+  transition: background-color .15s ease;
+}
+button:hover { background-color: #062a63; }
+
+/* Use a clean, even card grid instead of flex wrap */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
+  padding: 10px 40px 40px;
+  justify-items: stretch;   /* full-width cards per column */
+}
+
+/* Card look like screenshot: white, rounded, soft shadow */
+.gallery-item {
+  background: #ffffff;
+  border: 1px solid #e6e8ee;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+  overflow: hidden;
+  padding: 0;               /* remove inner padding so image spans edge */
+  transition: transform .2s ease;
+}
+.gallery-item:hover { transform: translateY(-4px); }
+
+
+.gallery-item img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 0;         /* square inside the card */
+}
+
+/* Text block spacing + typography */
+.gallery-item p {
+  margin: 0;
+  padding: 14px 14px 16px;
+  font-size: 14px;
+  color: #4b5563;           /* slate-ish grey for date line */
+  line-height: 1.35;
+}
+.gallery-item p strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;         /* bold title like screenshot */
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+/* Keep your existing hover-zoom on the image */
+.gallery-item .thumb-wrap { border-radius: 0; } /* card already has radius */
+
+/* Video badge matches card style */
+.badge {
+  background: #e03c31;      /* NASA red */
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  position: absolute;
+  top: 8px; left: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  pointer-events: none;
+}
+
+/* Did-You-Know banner spacing */
+.did-you-know {
+  background: #fff;
+  border: 1px solid #e6e8ee;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 0 40px 12px 40px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05);
+}
+
+/* Responsive tweaks: tighter padding on small screens */
+@media (max-width: 640px) {
+  .gallery { padding: 10px 20px 28px; gap: 18px; }
+  .did-you-know { margin: 0 20px 12px 20px; }
+}
+
+
