@@ -180,14 +180,47 @@ const injectFactBanner = () => {
 fetchBtn.addEventListener('click', () => {
   showLoading();
 
-  fetch(apodData)
+  let startInput = document.getElementById('startDate');
+  if (!startInput) {
+    startInput = document.createElement('input');
+    startInput.type = "date";
+    startInput.id = "startDate";
+    startInput.style.marginRight = "10px";
+    filters.insertBefore(startInput, fetchBtn);
+  }
+
+  const chosenDate = startInput.value;
+
+   fetch(apodData)
     .then(res => res.json())
-    .then(items => {
-      if (!items.length) {
-        showError("No APOD entries found.");
+    .then(data => {
+      if (!Array.isArray(data)) return showError("Invalid APOD data.");
+
+      // Sort by newest → oldest
+      const sorted = [...data].sort((a,b) => parseISO(b.date) - parseISO(a.date));
+
+      // If no date chosen, just take newest 9
+      if (!chosenDate) {
+        renderGallery(sorted.slice(0, 9));
         return;
       }
-      renderGallery(items);
+
+      // Find chosen date index
+      const idx = sorted.findIndex(item => item.date === chosenDate);
+
+      if (idx === -1) {
+        showError("Date not found in dataset.");
+        return;
+      }
+      // Get 9 consecutive items starting from that index
+      const nine = sorted.slice(idx, idx + 9);
+
+      if (!nine.length) {
+        showError("Not enough data for 9 days after this date.");
+        return;
+      }
+
+      renderGallery(nine);
     })
     .catch(() => showError("Could not load NASA images."));
 });
